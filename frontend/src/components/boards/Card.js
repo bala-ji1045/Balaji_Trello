@@ -105,7 +105,10 @@ const Card = ({ card, list, provided, isDragging }) => {
                 )}
                 {hasImageCover && (
                     <div className="card__image">
-                        <img src={card.image || card.image_url} />
+                        <img
+                            src={card.image || card.image_url}
+                            alt=""
+                        />
                     </div>
                 )}
                 <div>
@@ -254,7 +257,9 @@ const EditControls = ({
     setShowModal,
     setShowLabelModal,
 }) => {
-    useEffect(modalBlurHandler(setShowModal), []);
+    useEffect(() => {
+        return modalBlurHandler(setShowModal)();
+    }, [setShowModal]);
     return (
         <div className="card__edit-controls">
             <button onClick={onEditCard} className="btn">

@@ -24,7 +24,7 @@ function App() {
 
     useEffect(() => {
         checkAuth();
-    }, []);
+    }, [checkAuth]);
 
     if (!checkedAuth) {
         return null;

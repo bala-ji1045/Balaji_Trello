@@ -39,7 +39,7 @@ const HomeBoard = ({ board, replaceBoard }) => {
                 ></div>
             ) : (
                 <div className="board-preview__image">
-                    <img src={board.image || board.image_url} />
+                    <img src={board.image || board.image_url} alt="" />
                 </div>
             )}
             <p
