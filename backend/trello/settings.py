@@ -260,6 +260,7 @@ if cors_allowed_origins_env.strip():
 
 # Allow common private-network hosts used by dev servers.
 CORS_ALLOWED_ORIGIN_REGEXES = [
+    r'^https://[a-z0-9-]+\.vercel\.app$',
     r'^http://10\.\d+\.\d+\.\d+:3000$',
     r'^http://192\.168\.\d+\.\d+:3000$',
     r'^http://172\.(1[6-9]|2\d|3[0-1])\.\d+\.\d+:3000$',
