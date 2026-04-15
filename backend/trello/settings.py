@@ -13,6 +13,7 @@ import os
 from datetime import timedelta
 
 from pathlib import Path
+from django.core.exceptions import ImproperlyConfigured
 
 try:
     import dj_database_url
@@ -41,7 +42,7 @@ def env_bool(name, default=False):
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # Set DJANGO_SECRET_KEY in production.
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-insecure-change-me")
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY") or "dev-insecure-change-me-please-set-DJANGO_SECRET_KEY"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Set DJANGO_DEBUG=false in production.
@@ -55,6 +56,25 @@ if allowed_hosts_env.strip():
 else:
     # Safe defaults for local development.
     ALLOWED_HOSTS = ["localhost", "127.0.0.1"] if DEBUG else []
+
+# Safety rails: do not allow insecure defaults in production.
+if not DEBUG:
+    if not os.environ.get("DJANGO_SECRET_KEY"):
+        raise ImproperlyConfigured(
+            "DJANGO_SECRET_KEY must be set when DJANGO_DEBUG is false"
+        )
+    if len(SECRET_KEY) < 32:
+        raise ImproperlyConfigured(
+            "DJANGO_SECRET_KEY must be at least 32 characters"
+        )
+
+csrf_trusted_origins_env = os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS", "")
+if csrf_trusted_origins_env.strip():
+    CSRF_TRUSTED_ORIGINS = [
+        o.strip()
+        for o in csrf_trusted_origins_env.split(",")
+        if o.strip()
+    ]
 
 
 # Application definition
