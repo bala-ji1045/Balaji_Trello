@@ -49,10 +49,15 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY") or "dev-insecure-change-me-plea
 DEBUG = env_bool("DJANGO_DEBUG", True)
 
 allowed_hosts_env = os.environ.get("DJANGO_ALLOWED_HOSTS", "")
+render_external_hostname = os.environ.get("RENDER_EXTERNAL_HOSTNAME", "").strip()
+
 if allowed_hosts_env.strip():
     ALLOWED_HOSTS = [
         h.strip() for h in allowed_hosts_env.split(",") if h.strip()
     ]
+elif render_external_hostname:
+    # Render provides this automatically (e.g. "my-service.onrender.com").
+    ALLOWED_HOSTS = [render_external_hostname]
 else:
     # Safe defaults for local development.
     ALLOWED_HOSTS = ["localhost", "127.0.0.1"] if DEBUG else []
@@ -75,6 +80,8 @@ if csrf_trusted_origins_env.strip():
         for o in csrf_trusted_origins_env.split(",")
         if o.strip()
     ]
+elif not DEBUG and render_external_hostname:
+    CSRF_TRUSTED_ORIGINS = [f"https://{render_external_hostname}"]
 
 
 # Application definition

@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: balaji-trello-backend
+    env: python
+    rootDir: backend
+    plan: free
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py migrate
+    startCommand: gunicorn trello.wsgi:application --bind 0.0.0.0:$PORT
+    envVars:
+      - key: DJANGO_DEBUG
+        value: "false"
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      # Set this after frontend deploy (Vercel URL)
+      - key: CORS_ALLOWED_ORIGINS
+        value: ""
+      # Optional: if you use a Render Postgres database, set DATABASE_URL in Render
+      # - key: DATABASE_URL
+      #   fromDatabase:
+      #     name: balaji-trello-db
+      #     property: connectionString
+
+# Optional managed database (uncomment if you want Render to provision it via Blueprint)
+# databases:
+#   - name: balaji-trello-db
+#     plan: free
+#     databaseName: balaji_trello
+#     user: balaji_trello
