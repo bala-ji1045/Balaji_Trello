@@ -1,0 +1,35 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+django = "*"
+djangorestframework-simplejwt = "*"
+django-cors-headers = "*"
+djangorestframework = "*"
+pillow = "*"
+drf-yasg = "*"
+uritemplate = "*"
+pyyaml = "*"
+redis = "*"
+
+# Deployment
+# Use DATABASE_URL on Render/Fly/etc.
+dj-database-url = "*"
+psycopg2-binary = "*"
+# Production WSGI server
+gunicorn = "*"
+# Static file serving
+whitenoise = "*"
+
+# Testing
+pytest = "*"
+pytest-django = "*"
+pytest-cov = "*"
+mixer = "*"
+
+[requires]
+python_version = "3.8"
