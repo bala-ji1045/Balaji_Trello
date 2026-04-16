@@ -2,5 +2,11 @@
   "installCommand": "npm --prefix frontend install",
   "buildCommand": "CI=false npm --prefix frontend run build",
   "outputDirectory": "frontend/build",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://balaji-trello-backend.onrender.com/$1"
+    },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }

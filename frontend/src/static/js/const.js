@@ -1,5 +1,5 @@
 export const backendUrl =
-    process.env.REACT_APP_BACKEND_URL || "http://localhost:8000";
+    process.env.REACT_APP_BACKEND_URL || "/api";
 
 export const colors = [
     ["#0079bf", false],
