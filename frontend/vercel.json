@@ -5,7 +5,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://balaji-trello-backend.onrender.com/$1"
+      "destination": "https://balaji-trello.onrender.com/$1"
     },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
